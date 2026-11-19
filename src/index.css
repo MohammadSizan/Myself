@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-workspace-bg: #100B1C;
+  --color-workspace-surface: #191127;
+  --color-workspace-card: #211632;
+  --color-accent-primary: #C13BFF;
+  --color-accent-secondary: #F04BCB;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B9AFC8;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #100B1C;
+    color: #FFFFFF;
+    font-family: var(--font-sans);
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: #100B1C;
+    color: #FFFFFF;
+    overflow-x: clip;
+    letter-spacing: 0.01em;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  /* Focus ring accessibility */
+  :focus-visible {
+    outline: 2px solid #C13BFF;
+    outline-offset: 3px;
+  }
+}
+
+/* Subtle workspace grid overlay - lightweight CSS pattern */
+.workspace-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(185, 175, 200, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(185, 175, 200, 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Compositor-only gentle ambient float for low-end device smoothness */
+@keyframes gentle-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(12px, -10px, 0) scale(1.03);
+    opacity: 0.48;
+  }
+}
+
+.ambient-orb {
+  animation: gentle-drift 12s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ambient-orb {
+    animation: none;
+  }
+}
